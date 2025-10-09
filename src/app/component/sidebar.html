@@ -1,0 +1,53 @@
+<mat-drawer-container class="sidebar-container">
+  <!-- <mat-drawer #drawer class="fixed-sidebar" mode="side" [opened]="!isOpen">
+    <div class="flex">
+      <h2>I</h2>
+      <h2>E</h2>
+    </div>
+  </mat-drawer> -->
+
+  <mat-drawer #drawer class="sidebar" mode="side" [opened]="isOpen" (mouseleave)="isOpen = false">
+    <div class="flex">
+      <h2>Items</h2>
+      <h2>Estoque</h2>
+    </div>
+  </mat-drawer>
+</mat-drawer-container>
+
+<div class="hover-zone" (mouseenter)="isOpen = true"></div>
+
+<style>
+  .sidebar-container {
+    height: 100vh;
+  }
+
+  .sidebar {
+    width: 250px;
+    padding: 10px;
+  }
+
+  .fixed-sidebar {
+    width: 3vw;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .hover-zone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 100vh;
+    z-index: 1000;
+  }
+
+  .flex {
+    display: flex;
+    height: 100%;
+    padding: 5;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>

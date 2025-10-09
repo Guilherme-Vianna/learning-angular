@@ -1,0 +1,24 @@
+<div class="flex central-page col">
+  <div class="flex center w-full">
+    <h1>Items</h1>
+    <button matButton="filled">Adicionar Produto</button>
+  </div>
+  <div>
+    <table mat-table [dataSource]="data" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns_displayed"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns_displayed"></tr>
+    </table>
+  </div>
+</div>
+
+<style></style>
