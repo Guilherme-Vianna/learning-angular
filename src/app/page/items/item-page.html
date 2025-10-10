@@ -1,8 +1,38 @@
+<form  [formGroup]="formulario" (ngSubmit)="onSubmit()" class="modal-area">
+  <div class="container-25 col">
+    <div class="fields w-full">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name"/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description"/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Code</mat-label>
+        <input matInput formControlName="code" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Barcode</mat-label>
+        <input matInput formControlName="barcode"/>
+      </mat-form-field>
+    </div>
+    <div style="width: 100%; display: flex; justify-content: end; gap: 1vw">
+      <button matButton style="width: 25%; background-color: crimson; color: white">
+        Cancelar
+      </button>
+      <button matButton="filled" style="width: 35%">Adicionar</button>
+    </div>
+  </div>
+</form>
+
 <div class="flex central-page col">
   <div class="flex center w-full">
     <h1>Items</h1>
     <button matButton="filled">Adicionar Produto</button>
   </div>
+
   <div>
     <table mat-table [dataSource]="data" class="mat-elevation-z8">
       <ng-container matColumnDef="id">
@@ -21,4 +51,34 @@
   </div>
 </div>
 
-<style></style>
+<style>
+  .modal-area {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .fields {
+    display: flex;
+    flex-direction: column;
+  }
+  .form {
+    position: fixed;
+    left: 50%;
+    width: 80%;
+    background-color: red;
+  }
+  .invisible {
+    display: none;
+  }
+  .modal {
+    display: block;
+  }
+</style>

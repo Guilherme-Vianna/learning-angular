@@ -11,6 +11,14 @@ body {
   flex-direction: column;
 }
 
+.container-25 {
+  border-radius: 5px;
+  background-color: aliceblue;
+  display: flex;
+  width: 25%;
+  padding: 20px;
+}
+
 .central-page {
   padding-left: 20vw;
   padding-right: 20vw;
