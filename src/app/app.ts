@@ -10,5 +10,4 @@ import { SideBar } from './component/sidebar';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('learning-angular');
 }

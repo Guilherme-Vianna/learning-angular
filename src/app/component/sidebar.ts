@@ -9,4 +9,4 @@ import { MatDrawer, MatDrawerContainer, MatDrawerContent, MatSidenav, MatSidenav
 
 export class SideBar {
     isOpen = false;
-} 
+}
