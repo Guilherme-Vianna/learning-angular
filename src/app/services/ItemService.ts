@@ -1,7 +1,9 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpRequest} from '@angular/common/http';
-import {Enviroment} from '../../enviroment/Enviroment';
-import {Routes} from '../../enviroment/Routes';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpRequest } from '@angular/common/http';
+import { Enviroment } from '../../enviroment/Enviroment';
+import { Routes } from '../../enviroment/Routes';
+import { Observable } from 'rxjs';
+import { IItemService } from './interfaces/IItemService';
 
 @Injectable({
   providedIn: 'root',
@@ -9,18 +11,21 @@ import {Routes} from '../../enviroment/Routes';
 export class ItemService implements IItemService {
   client = inject(HttpClient)
 
-  async create(item: ICreateItemDto): Promise<any> {
-
-    this.client.post(Enviroment.API_URL + Routes.ITEMS, item, {
+  create(item: ICreateItemDto): Observable<any> {
+    return this.client.post(Enviroment.API_URL + Routes.ITEMS, item, {
       keepalive: false,
       cache: "no-cache",
       responseType: 'json',
       timeout: 1000,
     })
-    .subscribe(config => {
-      console.log(config);
-    });
+  }
 
-    return Promise.resolve(undefined);
+  getAllItems(): Observable<IItemViewModelResponse[]> {
+    return this.client.get<IItemViewModelResponse[]>(Enviroment.API_URL + Routes.ITEMS, {
+      keepalive: false,
+      cache: "no-cache",
+      responseType: 'json',
+      timeout: 1000,
+    })
   }
 }

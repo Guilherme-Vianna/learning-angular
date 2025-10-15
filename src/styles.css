@@ -20,6 +20,13 @@ body {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
 }
 
+.table {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
 .central-page {
   padding-left: 20vw;
   padding-right: 20vw;
@@ -50,11 +57,18 @@ body {
   flex-direction: column;
 }
 
-.enter-animation {  animation: slide-fade 0.150s;}
-@keyframes
-slide-fade {
-  from {    opacity: 0;    transform: scale(0.5);}
-  to {    opacity: 1;    transform: scale(1);}
+.enter-animation {
+  animation: slide-fade 0.15s;
+}
+@keyframes slide-fade {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .center {

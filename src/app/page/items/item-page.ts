@@ -1,51 +1,60 @@
-import {Component, inject, Inject} from "@angular/core";
+import { Component, computed, createEnvironmentInjector, effect, inject, Inject, OnInit } from "@angular/core";
 import { MatButton, MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule, MatLabel } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
-import {Form, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {ItemService} from '../../services/ItemService';
-import {CreateItemDto} from '../../types/CreateItemDto';
+import { Form, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ItemService } from '../../services/ItemService';
+import { CreateItemDto } from '../../types/CreateItemDto';
+import { last, lastValueFrom } from "rxjs";
+import { ItemList } from "../../types/ItemList";
+import { signal } from "@angular/core";
 
 
 @Component({
-    selector: "item-page",
-    imports: [MatInputModule, MatFormFieldModule, MatLabel, MatTableModule, MatButtonModule, ReactiveFormsModule],
-    templateUrl: "./item-page.html",
+  selector: "item-page",
+  imports: [MatInputModule, MatFormFieldModule, MatLabel, MatTableModule, MatButtonModule, ReactiveFormsModule],
+  templateUrl: "./item-page.html",
 })
 
+
 export class ItemPage {
-    readonly itemService: ItemService = inject(ItemService);
+  readonly itemService: ItemService = inject(ItemService);
 
-    createModelOpen: boolean = false;
-    columns_displayed: string[] = ['id', 'name'];
-    data: ItemList[] = [{
-        id: 12,
-        name: "teasdas"
-    }]
+  createModelOpen = signal(false);
+  columns_displayed: string[] = ['name', 'code', 'description', 'barcode'];
+  data = signal<ItemList[]>([])
 
-    formulary: FormGroup;
+  formulary: FormGroup = new FormGroup({
+    "name": new FormControl(),
+    "code": new FormControl(),
+    "description": new FormControl(),
+    "barcode": new FormControl()
+  }, {
+    updateOn: 'submit'
+  });
 
-    constructor(itemService: ItemService) {
-      this.formulary = new FormGroup({
-        "name": new FormControl(),
-        "code": new FormControl(),
-        "description": new FormControl(),
-        "barcode": new FormControl()
-      },{
-        updateOn: 'submit'
-      })
-    }
+  fetchItems() {
+    this.itemService.getAllItems().subscribe(result => {
+      this.data.set(result.map(x => new ItemList(x.id, x.code, x.name, x.description, x.barcode)))
+    })
+  }
 
-    async onSubmit() {
-      const newItem = new CreateItemDto(
-        this.formulary.value.barcode,
-        this.formulary.value.code,
-        this.formulary.value.description,
-        this.formulary.value.name,
-      );
-      await this.itemService.create(newItem);
+  constructor() {
+    this.fetchItems()
+  }
+
+  async onSubmit() {
+    const newItem = new CreateItemDto(
+      this.formulary.value.barcode,
+      this.formulary.value.code,
+      this.formulary.value.description,
+      this.formulary.value.name,
+    );
+    this.itemService.create(newItem).subscribe(() => {
       this.formulary.reset();
-      this.createModelOpen = false;
-    }
+      this.createModelOpen.set(false);
+      this.fetchItems()
+    });
+  }
 }

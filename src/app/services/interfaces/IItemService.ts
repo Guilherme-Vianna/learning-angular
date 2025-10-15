@@ -1,3 +1,6 @@
-interface IItemService {
-  create(item: ICreateItemDto): Promise<any>
+import { Observable } from "rxjs"
+
+export interface IItemService {
+  create(item: ICreateItemDto): Observable<any>
+  getAllItems(): Observable<IItemViewModelResponse[]>
 }
