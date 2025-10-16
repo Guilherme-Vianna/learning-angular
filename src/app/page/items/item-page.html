@@ -1,47 +1,13 @@
-@if(createModelOpen()) {
-<form
-  [formGroup]="formulary"
-  (ngSubmit)="onSubmit()"
-  animate.enter="enter-animation"
-  class="modal-area"
->
-  <div class="container-25 col">
-    <div class="fields w-full">
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input matInput formControlName="description" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Code</mat-label>
-        <input matInput formControlName="code" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Barcode</mat-label>
-        <input matInput formControlName="barcode" />
-      </mat-form-field>
-    </div>
-    <div style="width: 100%; display: flex; justify-content: end; gap: 1vw">
-      <button
-        matButton
-        style="width: 25%; background-color: crimson; color: white"
-        (click)="createModelOpen.set(false)"
-      >
-        Cancelar
-      </button>
-      <button matButton="filled" style="width: 35%" (submit)="onSubmit()">Adicionar</button>
-    </div>
-  </div>
-</form>
+@if (createModalOpen()) {
+<create-modal (selfClose)="closeCreateModal()" />
+} @if (updateModalOpen()) {
+<update-modal [itemId]="itemId()" (selfClose)="closeUpdateModal()" />
 }
 
 <div class="flex central-page col">
   <div class="flex center w-full">
     <h1>Items</h1>
-    <button matButton="filled" (click)="createModelOpen.set(true)">Adicionar Produto</button>
+    <button matButton="filled" (click)="createModalOpen.set(true)">Adicionar Produto</button>
   </div>
 
   <div class="table">
@@ -71,6 +37,19 @@
         <td mat-cell *matCellDef="let element">{{ element.barcode }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef>Acoes</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            matIconButton
+            type="button"
+            (click)="editItem(element.id)"
+            aria-label="Example icon button with a open in new tab icon"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="columns_displayed"></tr>
       <tr mat-row *matRowDef="let row; columns: columns_displayed"></tr>
     </table>

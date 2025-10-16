@@ -1,0 +1,38 @@
+<form
+  [formGroup]="formulary"
+  (ngSubmit)="onSubmit()"
+  animate.enter="enter-animation"
+  class="modal-area"
+>
+  <div class="container-25 col">
+    <div class="fields w-full">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Code</mat-label>
+        <input matInput formControlName="code" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Barcode</mat-label>
+        <input matInput formControlName="barcode" />
+      </mat-form-field>
+    </div>
+    <div style="width: 100%; display: flex; justify-content: end; gap: 1vw">
+      <button
+        type="button"
+        matButton
+        style="width: 25%; background-color: crimson; color: white"
+        (click)="close()"
+      >
+        Cancelar
+      </button>
+      <button matButton="filled" style="width: 35%" (submit)="onSubmit()">Atualizar</button>
+    </div>
+  </div>
+</form>

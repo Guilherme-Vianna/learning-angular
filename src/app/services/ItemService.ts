@@ -20,8 +20,26 @@ export class ItemService implements IItemService {
     })
   }
 
+  get(id: string): Observable<any> {
+    return this.client.get(Enviroment.API_URL + Routes.ITEMS + `/${id}`, {
+      keepalive: false,
+      cache: "no-cache",
+      responseType: 'json',
+      timeout: 1000,
+    })
+  }
+
   getAllItems(): Observable<IItemViewModelResponse[]> {
     return this.client.get<IItemViewModelResponse[]>(Enviroment.API_URL + Routes.ITEMS, {
+      keepalive: false,
+      cache: "no-cache",
+      responseType: 'json',
+      timeout: 1000,
+    })
+  }
+
+  update(item: IUpdateItemDto): Observable<any> {
+    return this.client.put(Enviroment.API_URL + Routes.ITEMS + `/${item.id}`, item, {
       keepalive: false,
       cache: "no-cache",
       responseType: 'json',
