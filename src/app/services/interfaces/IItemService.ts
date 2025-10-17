@@ -5,4 +5,5 @@ export interface IItemService {
   update(item: IUpdateItemDto): Observable<any>
   getAllItems(): Observable<IItemViewModelResponse[]>
   get(id: string): Observable<IItemViewModelResponse>
+  delete(id: string): Observable<any>
 }

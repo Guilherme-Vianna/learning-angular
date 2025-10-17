@@ -21,7 +21,8 @@ import { CreateModal } from './components/create-modal';
 import { UpdateModal } from './components/update-modal';
 import { MatIconModule } from '@angular/material/icon';
 import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
-
+import { NgClass } from '@angular/common';
+import { DeleteModal } from "./components/delete-modal";
 @Component({
   selector: 'item-page',
   imports: [
@@ -34,6 +35,8 @@ import { consumerPollProducersForChange } from '@angular/core/primitives/signals
     ReactiveFormsModule,
     CreateModal,
     UpdateModal,
+    NgClass,
+    DeleteModal
   ],
   templateUrl: './item-page.html',
 })
@@ -42,16 +45,21 @@ export class ItemPage implements OnInit {
 
   createModalOpen = signal(false);
   updateModalOpen = signal(false);
+  deleteModalOpen = signal(false);
 
   columns_displayed: string[] = ['name', 'code', 'description', 'barcode', 'edit'];
   data = signal<ItemList[]>([]);
-  itemId = signal<string>("Qualquer coisa");
+  isLoading = signal<boolean>(false);
+  itemId = signal<string>("");
+  itemDeleteId = signal<string>("");
 
   fetchItems() {
+    this.isLoading.set(true);
     this.itemService.getAllItems().subscribe((result) => {
       this.data.set(
         result.map((x) => new ItemList(x.id, x.code, x.name, x.description, x.barcode)),
       );
+      this.isLoading.set(false);
     });
   }
 
@@ -60,8 +68,25 @@ export class ItemPage implements OnInit {
     this.updateModalOpen.set(true);
   }
 
+  removeItem(id: string) {
+    this.itemDeleteId.set(id)
+    this.deleteModalOpen.set(true)
+  }
+
+  deleteItem() {
+    this.itemService.delete(this.itemDeleteId()).subscribe(() => {
+      this.fetchItems()
+      this.deleteModalOpen.set(false);
+    });
+  }
+
   closeCreateModal() {
     this.createModalOpen.set(false);
+    this.fetchItems();
+  }
+
+  closeDeleteModal() {
+    this.deleteModalOpen.set(false);
     this.fetchItems();
   }
 

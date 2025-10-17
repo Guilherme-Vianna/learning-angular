@@ -39,7 +39,6 @@ export class UpdateModal implements OnInit {
   );
 
   close() {
-    console.log('close');
     this.selfClose.emit();
   }
 

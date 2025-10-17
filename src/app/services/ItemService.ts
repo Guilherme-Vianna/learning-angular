@@ -16,7 +16,7 @@ export class ItemService implements IItemService {
       keepalive: false,
       cache: "no-cache",
       responseType: 'json',
-      timeout: 1000,
+      timeout: 5000,
     })
   }
 
@@ -25,7 +25,7 @@ export class ItemService implements IItemService {
       keepalive: false,
       cache: "no-cache",
       responseType: 'json',
-      timeout: 1000,
+      timeout: 5000,
     })
   }
 
@@ -34,7 +34,7 @@ export class ItemService implements IItemService {
       keepalive: false,
       cache: "no-cache",
       responseType: 'json',
-      timeout: 1000,
+      timeout: 5000,
     })
   }
 
@@ -43,7 +43,16 @@ export class ItemService implements IItemService {
       keepalive: false,
       cache: "no-cache",
       responseType: 'json',
-      timeout: 1000,
+      timeout: 5000,
+    })
+  }
+
+  delete(id: string): Observable<any> {
+    return this.client.delete(Enviroment.API_URL + Routes.ITEMS + `/${id}`, {
+      keepalive: false,
+      cache: "no-cache",
+      responseType: 'json',
+      timeout: 5000,
     })
   }
 }

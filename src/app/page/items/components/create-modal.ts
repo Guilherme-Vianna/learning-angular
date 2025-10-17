@@ -36,7 +36,6 @@ export class CreateModal {
   );
 
   close() {
-    console.log('close');
     this.selfClose.emit();
   }
 
